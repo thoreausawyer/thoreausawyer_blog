@@ -1,0 +1,199 @@
+#auth-wrapper{
+    padding: 100px 0px 150px;
+    min-width: 1440px;
+    height: calc(100vh - 68px - 100px - 150px);
+    /* InputBox가 크게 보이는 게 싫으면 min-height를 주석처리 */
+    min-height: 800px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-image: url(../../assets/image/background-violet-dye.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.auth-container{
+    width: 1200px;
+    height: 100%;
+    
+    /* 중간을 기준으로 몇 : 몇 으로 나누기 diplay:grid 사용법*/
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    column-gap: 78px;
+}
+
+.auth-jumbotron-box{
+    grid-column: 1 / 2;
+    
+    height: 100%;
+
+    display: flex;
+    /* 주축 중앙 정렬 */
+    justify-content: center; 
+    /* 교차축 중앙 정렬 */
+    align-items: center;
+}
+
+.auth-jumbotron-contents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.auth-logo-icon{
+    width: 50px;
+    height: 50px;
+
+    background-image: url(../../assets/image/logo-dark-removebg.png);
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+}
+
+.auth-jumbotron-text-box{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.auth-jumbotron-text{
+    color: rgba(0,0,0,0.35);
+
+    font-family: Iro;
+    font-size: 40px;
+    font-weight: 400;
+    font-weight: 140%;
+    letter-spacing: -1.2px;
+    text-align: left;
+
+}
+
+/* InputBox Style */
+.auth-card{
+    grid-column: 2 / 3;
+    border-radius: 10px;
+    padding: 50px 50px 30px;
+
+    background-color: rgba(255,255,255,1);
+    box-shadow: rgba(0,0,0,0.25);
+}
+
+.auth-card-box{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.auth-card-top{
+    display: flex;
+    /* 위에서부터 아래로 쌓이기 때문에 flex-direction: column */
+    flex-direction: column;
+    gap: 40px;
+}
+
+.auth-card-title-box{
+    display: flex;
+    /*주축 기준으로 좌우로 배치되게 하려면 justify-content: space-between*/
+    justify-content: space-between;
+}
+
+.auth-card-title{
+    color: rgba(0,0,0,1);
+    
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.auth-card-page{
+    /* color: rgba(0,0,0,0.7); */
+    
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 140%;
+
+}
+
+.auth-card-bottom{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-sign-in-error-box{
+    margin-bottom: -4px;
+}
+
+.auth-sign-in-error-message{
+    color: rgba(255,0,0,0.7);
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 140%;
+
+    /* 줄바꿈 적용하려면 글자이 \n을 해놓으면 적용된다. */
+    white-space: pre-wrap;
+}
+
+.auth-description-box{
+    display: flex;
+    justify-content: center;
+}
+
+.auth-description{
+    color: rgba(0,0,0,0.7);
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.auth-description-link{
+    color: rgba(0,0,0,1);
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.auth-consent-box{
+    display: flex;
+    /* 수직 중앙 정렬, 교차축 기준 */
+    align-items: center; 
+    gap: 6px;
+}
+
+.auth-check-box{
+    cursor: pointer;
+
+    width: 19px;
+    height: 19px;
+}
+
+.auth-consent-title{
+    color: rgba(0,0,0,0.7);
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.auth-consent-title-error{
+    color: rgba(255,0,0,0.7);
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.auth-consent-link{
+    color: rgba(0,0,0,1);
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+}

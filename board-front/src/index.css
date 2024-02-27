@@ -1,0 +1,71 @@
+/*웹 폰트로 받아오는 법*/
+
+@font-face {
+  font-family: "Pre";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GimhaeGayaR";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/GimhaeGayaR.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+
+}
+@font-face {
+    font-family: "Interop";
+    src: url("https://raw.githubusercontent.com/payw-org/Interop/main/web/fonts/Interop-Regular.woff2")
+        format("woff2"),
+      url("https://raw.githubusercontent.com/payw-org/Interop/main/web/fonts/Interop-Regular.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
+/*폰트 파일로 받아오는 법*/
+
+@font-face {
+  font-family: "Irop";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./assets/fonts/IropkeBatangM.woff") format("woff");
+}
+@font-face {
+  font-family: "Ams";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./assets/fonts/AmsterdamFour.ttf") format("woff");
+}
+@font-face {
+  font-family: "Bou";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./assets/fonts/BuongiornoRastellino.otf") format("opentype");
+}
+@font-face {
+  font-family: "TYS";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./assets/fonts/TYScript-Rg.ttf") format("truetype");
+}
+@font-face {
+  font-family: "TYB";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./assets/fonts/TYSerif-Book.ttf") format("truetype");
+}
+
+
+body {
+  margin: 0;
+  /* 나중에 잡히는 게 있다. */
+  min-width: 1440px; 
+  font-family: 'Irop';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

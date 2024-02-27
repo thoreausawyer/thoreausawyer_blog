@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "IropkeBatangM";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./IropkeBatangM.woff") format("woff");
+}
+@font-face {
+  font-family: "SDSwaggerTTF";
+  font-style: normal;
+  font-weight: 100;
+  src: url("./SDSwaggerTTF.woff") format("woff");
+}
+
+@font-face {
+  font-family: "BinggraeTaom-Bold";
+  src: url("./BinggraeTaom-Bold.ttf");
+}
+
+@font-face {
+  font-family: "BinggraeTaom";
+  src: url("./BinggraeTaom.ttf");
+}
+
+@font-face {
+  font-family: "HSBomBaram";
+  src: url("./HSBomBaram.ttf");
+}
