@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.response.ResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.entity.BoardEntity;
 import com.thoreausawyer.boardback.entity.ImageEntity;
 import com.thoreausawyer.boardback.repository.BoardRespository;
 import com.thoreausawyer.boardback.repository.ImageRepository;
 import com.thoreausawyer.boardback.repository.UserRepository;
+import com.thoreausawyer.boardback.repository.resultSet.GetBoardResultSet;
 import com.thoreausawyer.boardback.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,36 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardServiceImplement implements BoardService {
     
-    private  final UserRepository userRepository;
     private final BoardRespository boardRespository;
+    private  final UserRepository userRepository;
     private final ImageRepository imageRepository;
+
+    @Override
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
+        
+        GetBoardResultSet resultSet = null;
+        List<ImageEntity> imageEntities = new ArrayList<>();
+
+        try {
+            
+            resultSet = boardRespository.getBoard(boardNumber);
+            if (resultSet == null) return GetBoardResponseDto.noExistBoard();
+            
+            imageEntities = imageRepository.findByBoardNumber(boardNumber);
+
+            // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
+            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            boardEntity.increaseViewCount();
+            boardRespository.save(boardEntity);
+
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetBoardResponseDto.success(resultSet, imageEntities);
+    }
+
 
 
     @Override
@@ -60,5 +89,8 @@ public class BoardServiceImplement implements BoardService {
 
         return PostBoardResponseDto.success();
 	}
+
+
+    
     
 }
