@@ -4,6 +4,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from "constant";
 import { useCookies } from "react-cookie";
 import { useBoardStore, userLoginUserStore } from "stores";
+import { fileUploadRequest, postBoardRequest } from "apis";
+import { PostBoardRequestDto } from "apis/request/board";
+import { PostBoardResponseDto } from "apis/response/board";
+import { ResponseDto } from "apis/response";
 
 //          component: 헤더 레이아웃         //
 export default function Header() {
@@ -111,7 +115,7 @@ export default function Header() {
 
   }
 
-  //          component: 로그인 또는 마이페이지 버튼 컴포넌트           //
+  //          component: 마이페이지 버튼 컴포넌트           //
   const MyPageButton = () => {
 
     //          state: userEmail path variable 상태         //
@@ -148,8 +152,45 @@ export default function Header() {
     //          state: 게시물 상태          //
     const{ title, content, boardImageFileList, resetBoard } = useBoardStore();
 
+    //          function: post board response 처리 함수         //
+    const postBoardResponse = (responseBody: PostBoardResponseDto | ResponseDto | null) => {
+      if (!responseBody) return;
+      const { code } = responseBody;
+
+      if ( code === 'AF' || code === 'NU') navigate(AUTH_PATH());
+      if ( code === 'VF') alert('제목과 내용은 필수입니다.');
+      if ( code === 'DBE') alert('데이터베이스 오류입니다.');
+      if ( code !== 'SU') return; 
+
+      resetBoard();
+      if (!loginUser) return;
+      const { email } = loginUser;
+      navigate(USER_PATH(email)); //마이페이지로 넘어가게 해줌
+    }
+
+
     //          event handler: 업로드 버튼 클릭 이벤트 처리 함수          //
-    const onUploardButtonClickHandler = () =>{
+    const onUploardButtonClickHandler = async () =>{
+      const accessToken = cookies.accessToken;
+      if (!accessToken) return;
+
+      const boardImageList: string[] = [];
+      
+      // boardImageFileList은 파일을 가지고 있으니, 반복을 돌면서 파일 업로드 작업을 한 결과인 URL을 받아서 하나씩 추가를 함.
+      // 동기처리를 해줘야함
+      for (const file of boardImageFileList){
+        const data = new FormData();
+        data.append('file', file);
+
+        const url = await fileUploadRequest(data);
+        if (url) boardImageList.push(url);
+      }
+
+      // 실제 포스트하는 작업
+      const requestBody: PostBoardRequestDto = {
+        title, content, boardImageList
+      }
+      postBoardRequest(requestBody, accessToken).then(postBoardResponse);
 
     }
 

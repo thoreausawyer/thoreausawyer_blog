@@ -1,3 +1,8 @@
+.divider{
+  width: 100%;
+  border-top: 1px solid rgba(0,0,0,0.2);
+}
+
 .black-button{
   border-radius: 46px;
   width: 95px;
@@ -163,4 +168,12 @@
 
 .black-checkbox-icon{
   background-image: url(assets/image/black-checkbox.png);
+}
+
+.image-box-light-icon{
+  background-image: url(assets/image/white-picture.png);
+}
+
+.close-icon{
+  background-image: url(assets/image/white-x.png);
 }
