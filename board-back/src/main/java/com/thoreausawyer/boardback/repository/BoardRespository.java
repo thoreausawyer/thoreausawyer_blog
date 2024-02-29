@@ -10,6 +10,8 @@ import com.thoreausawyer.boardback.repository.resultSet.GetBoardResultSet;
 @Repository
 public interface BoardRespository extends JpaRepository<BoardEntity,Integer>{
 
+    boolean existsByBoardNumber(Integer boardNumber);
+
     BoardEntity findByBoardNumber(Integer boardNumber);
 
     // Join릏 통해 데이터를 가져와야하는 것은(하나의 엔터티로 둘을 커버할 수 없기에), 실제 SQL쿼리문을 작성해서 테이터를 가져온다.

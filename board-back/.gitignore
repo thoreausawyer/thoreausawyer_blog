@@ -1,3 +1,6 @@
+# 프로퍼티스 제외
+application.properties
+
 HELP.md
 .gradle
 build/

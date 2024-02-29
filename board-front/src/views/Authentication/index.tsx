@@ -227,7 +227,7 @@ import { Address, useDaumPostcodePopup } from "react-daum-postcode";
       //          state: 닉네임 에러 메세지 상태         //
       const [nicknameErrorMessage, setNicknameErrorMessage] = useState<string>('');
       //          state: 핸드폰 번호 에러 메세지 상태         //
-      const [TelNuberErrorMessage, setTelNumberErrorMessage] = useState<string>('');
+      const [TelNumberErrorMessage, setTelNumberErrorMessage] = useState<string>('');
       //          state: 주소 에러 메세지 상태         //
       const [AddressErrorMessage, setAddressErrorMessage] = useState<string>('');
 
@@ -496,7 +496,7 @@ import { Address, useDaumPostcodePopup } from "react-daum-postcode";
               {page === 2 && (
               <>
               <InputBox ref={nicknameRef} label="닉네임*" type="text" placeholder="닉네임을 입력해주세요." value={nickname} onChange={onNicknameChangeHandler} error={isNicknameError} message={nicknameErrorMessage} onKeyDown={onNicknameKeyDownHandler} />
-              <InputBox ref={telNumberRef} label="휴대폰 번호*" type="text" placeholder="핸드폰 번호를 입력해주세요." value={telNumber} onChange={onTelNumbereChangeHandler} error={isTelNumberError} message={TelNuberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
+              <InputBox ref={telNumberRef} label="휴대폰 번호*" type="text" placeholder="핸드폰 번호를 입력해주세요." value={telNumber} onChange={onTelNumbereChangeHandler} error={isTelNumberError} message={TelNumberErrorMessage} onKeyDown={onTelNumberKeyDownHandler} />
               <InputBox ref={addressRef} label="주소*" type="text" placeholder="우편번호 찾기" value={address} onChange={onAddressChangeHandler} error={isAddressError} message={AddressErrorMessage} icon="expand-right-light-icon" onButtonClick={onAddressButtonClickHandler} onKeyDown={onAddressKeyDownHandler} />
               <InputBox ref={addressDetailRef} label="상세 주소" type="text" placeholder="상세 주소를 입력해주세요." value={addressDetail} onChange={onAddressDetailChangeHandler} error={false} onKeyDown={onAddressDetailKeyDownHandler}/>
               </>

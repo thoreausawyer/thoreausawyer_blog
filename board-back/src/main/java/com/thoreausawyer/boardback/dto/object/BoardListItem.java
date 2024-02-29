@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter@NoArgsConstructor@AllArgsConstructor
 public class BoardListItem {
   
-  private int boardNuber;
+  private int boardNumber;
   private String title;
   private String content;
   private String boardTitleImage;
