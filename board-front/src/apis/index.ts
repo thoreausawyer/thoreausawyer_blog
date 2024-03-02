@@ -7,7 +7,7 @@ import { SignInResponseDto, SignUpResponseDto } from "./response/auth";
 import { ResponseDto } from "./response";
 import { GetSignInUserResponseDto } from "./response/user";
 import { PostBoardRequestDto } from "./request/board";
-import { PostBoardResponseDto } from "./response/board";
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto  } from "./response/board";
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -24,8 +24,6 @@ const now = new Date().toLocaleString();
 const SIGN_IN_URL = () => `${API_DOMAIN}/auth/sign-in`;
 const SIGN_UP_URL = () => `${API_DOMAIN}/auth/sign-up`;
 
-console.log(SIGN_IN_URL())
-            
                                         // requestBody로 넘겨줄데이터를 받아오는데,
     // 데이터를 받아서 API요청을 보낸다.      // 그 데이터의 타입은 SignInRequestDto 타입이다.
 export const signInRequest = async (requestBody: SignInRequestDto) => {
@@ -71,8 +69,39 @@ export const signUpRequest = async (requestBody: SignUpRequestDto) => {
     return result;
 }
 
+// 게시물 상세 불러오기
+const GET_BOARD_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}`;
+const INCREASE_VIEW_COUNT_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}/increase-view-count`;
 // 게시물 작성
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
+
+export const getBoardRequest = async (boardNumber: number | string ) => {
+    const result = await axios.get(GET_BOARD_URL(boardNumber))
+        .then(response => {
+            const responseBody: GetBoardResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error => {
+            if(!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        })
+    return result;
+}
+
+export const increaseViewCountRequset = async (boardNumber: number | string) => {
+    const result = await axios.get(INCREASE_VIEW_COUNT_URL(boardNumber))
+        .then( response => {
+            const responseBody: IncreaseViewCountResponseDto = response.data;
+            return responseBody;
+        })
+        .catch( error => {
+            if (!error.reponse) return null;
+            const responseBody: ResponseDto = error.reponse.data;
+            return responseBody;
+        })
+        return result;
+}
 
 export const postBoardRequest = async (requestBody: PostBoardRequestDto, accessToken: string) => {
     const result = await axios.post(POST_BOARD_URL(), requestBody, authorization(accessToken))
@@ -81,7 +110,7 @@ export const postBoardRequest = async (requestBody: PostBoardRequestDto, accessT
             return responseBody;
         })
         .catch(error => {
-            if (error.response) return null;
+            if (!error.response) return null;
             const  responseBody: ResponseDto = error.reponse.data;
             return responseBody;
         })

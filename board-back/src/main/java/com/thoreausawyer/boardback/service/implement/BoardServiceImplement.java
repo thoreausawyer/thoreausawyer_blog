@@ -15,6 +15,7 @@ import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.thoreausawyer.boardback.entity.BoardEntity;
 import com.thoreausawyer.boardback.entity.CommentEntity;
 import com.thoreausawyer.boardback.entity.FavoriteEntity;
@@ -95,10 +96,11 @@ public class BoardServiceImplement implements BoardService {
             
             imageEntities = imageRepository.findByBoardNumber(boardNumber);
 
+            // 카운터가 5씩 증가하는 거 방지 
             // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
-            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
-            boardEntity.increaseViewCount();
-            boardRespository.save(boardEntity);
+            // BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            // boardEntity.increaseViewCount();
+            // boardRespository.save(boardEntity);
 
 
         } catch (Exception exception) {
@@ -203,6 +205,30 @@ public class BoardServiceImplement implements BoardService {
         }
     
         return PutFavoriteResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber) {
+        try {
+            
+            // getBoard에 있는 것을 옮겨옴. viewCount가 5개씩 증가하는 것 방지하기 위해. 독립적인 veiwcount매서드를 만들어줌.
+            // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
+            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            System.out.println("boardEntity.toString()");
+            System.out.println(boardNumber);
+            System.out.println(boardEntity.getWriterEmail());
+            System.out.println("boardEntity.toString()");
+            if (boardNumber == null) return IncreaseViewCountResponseDto.noExistBoard();
+
+            boardEntity.increaseViewCount();
+            boardRespository.save(boardEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        
+        return IncreaseViewCountResponseDto.success();
     }
 
 

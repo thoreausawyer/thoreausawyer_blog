@@ -3,6 +3,10 @@
   border-top: 1px solid rgba(0,0,0,0.2);
 }
 
+.emphasis{
+  font-weight: bolder;
+}
+
 .black-button{
   border-radius: 46px;
   width: 95px;
@@ -180,5 +184,25 @@
 
 .more-icon{
   background-image: url(assets/image/white-menu-dots.png);
+}
+
+.favorite-fill-icon{
+  background-image: url(assets/image/black-heart.png);
+}
+
+.favorite-light-icon{
+  background-image: url(assets/image/white-heart.png);
+}
+
+.up-light-icon{
+  background-image: url(assets/image/angle-up.png);
+}
+
+.down-light-icon{
+  background-image: url(assets/image/angle-down.png);
+}
+
+.comment-icon{
+  background-image: url(assets/image/white-comment.png);
 }
 

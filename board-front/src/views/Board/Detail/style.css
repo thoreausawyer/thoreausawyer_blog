@@ -54,7 +54,7 @@
     height: 32px;
 
     background-position: 50% 50%;
-    background-image: 100% 100%;
+    background-size: 100% 100%;
 }
 
 .board-detail-writer-nickname{
@@ -63,6 +63,9 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 140%;
+
+    /* 손가락 모양이 생김 */
+    cursor: pointer; 
 }
 
 /* 2개 동시에 적용할 때 */
@@ -119,7 +122,7 @@
     line-height: 140%;
 }
 
-.board-detail-delete-button:hover {
+.board-detail-delete-button:hover { 
     cursor: pointer;
     background-color: rgba(0,0,0,0.03);
 }
@@ -144,4 +147,128 @@
 
 .board-detail-main-image{
     width: 100%;
+}
+
+.board-detail-bottom{
+    display: flex;
+    /* 세로로 쌓임 */
+    flex-direction: column;
+    gap: 20px;
+}
+
+.board-detail-bottom-button-box{
+    display: flex;
+    gap: 12px;
+}
+
+.board-detail-bottom-button-group{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.board-detail-bottom-button-text{
+    color: rgba(0,0,0,0.7);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.board-detail-bottom-favorite-box{
+    border: 1px solid rgba(0,0,0,0.2);
+    /* 위, 양옆, 아래 */
+    padding: 20px 20px 40px; 
+
+}
+
+.board-detail-bottom-favorite-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.board-detail-bottom-favorite-title{
+    color: rgba(0,0,0,1);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.board-detail-bottom-favorite-contents{
+    display: flex;
+    /* 옆으로 쌓이면서 공간 안에 다 못 들어가는 것은 아래로 차곡차곡 쌓임 */
+    flex-wrap: wrap;
+
+    /* 위,아래 갭 */
+    row-gap: 20px;
+    /* 옆 갭 */
+    column-gap: 30px;
+}
+
+.board-detail-bottom-comment-box{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.board-detail-bottom-comment-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    /* 위아래, 좌우 */
+    padding: 0 20px;
+}
+
+.board-detail-bottom-comment-title{
+    color: rgba(0,0,0,1);
+
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+.board-detail-bottom-comment-list-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.board-detail-bottom-comment-pagination-box{
+    display: flex;
+    justify-content: center;
+}
+
+.board-detail-bottom-comment-input-box{
+    border: 1px solid rgba(0,0,0,0.2);
+    padding: 20px 20px;
+}
+
+.board-detail-bottom-comment-input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+}
+
+.board-detail-bottom-comment-textarea{
+    border: none;
+    outline: none;
+    background: none;
+    resize: none;
+
+    /* 글자가 넘치면 숨긴다. */
+    overflow: hidden;
+
+    color: rgba(0,0,0,1);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+.board-detail-bottom-comment-button-box{
+        display: flex;
+        /* 왼쪽으로 보내기, (flex-start, center, flex-end) */
+        justify-content: flex-end;
 }

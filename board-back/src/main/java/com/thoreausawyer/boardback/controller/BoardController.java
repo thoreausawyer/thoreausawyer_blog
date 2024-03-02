@@ -14,6 +14,7 @@ import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostCommentRequestDto;
 import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetCommentListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
@@ -36,7 +37,7 @@ public class BoardController {
     ){
         ResponseEntity<? super GetBoardResponseDto> response = boardService.getBoard(boardNumber);
         return response;
-
+        
     }
 
     @GetMapping("/{boardNumber}/favorite-list")
@@ -52,6 +53,15 @@ public class BoardController {
         @PathVariable("boardNumber") Integer boardNumber
     ){
         ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
+        return response;
+    }
+
+    // 조회수 1개씩 올라가기
+    @GetMapping("/{boardNumber}/increase-view-count")
+    public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(
+        @PathVariable("boardNumber") Integer boardNumber
+    ){
+        ResponseEntity<? super IncreaseViewCountResponseDto> response = boardService.increaseViewCount(boardNumber);
         return response;
     }
 
@@ -82,5 +92,7 @@ public class BoardController {
         ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavoite(boardNumber, email);
         return response;
     }
+
+    
 
 }

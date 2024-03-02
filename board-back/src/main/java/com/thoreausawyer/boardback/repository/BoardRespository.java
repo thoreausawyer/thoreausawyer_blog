@@ -25,7 +25,7 @@ public interface BoardRespository extends JpaRepository<BoardEntity,Integer>{
         "B.write_datetime AS writeDatetime, " +
         "B.writer_email AS writerEmail, " +
         "U.nickname AS writerNickname, " +
-        "U.profile_image AS writerProfile_Image " +
+        "U.profile_image AS writerProfileImage " +
         "FROM board AS B " +
         "INNER JOIN user AS U " +
         "ON B.writer_email = U.email " +

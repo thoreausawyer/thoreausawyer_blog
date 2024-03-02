@@ -39,10 +39,10 @@ public class GetBoardResponseDto extends ResponseDto{
         this.title = resultSet.getTitle();
         this.content = resultSet.getContent();
         this.boardImageList = boardImageList; // imageEntity의 imageEntities들을 List돌려서 boardImageList를 만든다
-        this.writeDatetime = getWriteDatetime();
-        this.writerEmail = getWriterEmail();
-        this.writerNickname = getWriterNickname();
-        this.writerProfileImage = getWriterProfileImage();
+        this.writeDatetime = resultSet.getWriteDatetime();
+        this.writerEmail = resultSet.getWriterEmail();
+        this.writerNickname = resultSet.getWriterNickname();
+        this.writerProfileImage = resultSet.getWriterProfileImage();
 
     }
 

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetCommentListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostCommentRequestDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
@@ -20,4 +21,6 @@ public interface BoardService {
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email);
 
     ResponseEntity<? super PutFavoriteResponseDto> putFavoite(Integer boardNumber, String email);
+
+    ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
 }
