@@ -214,10 +214,6 @@ public class BoardServiceImplement implements BoardService {
             // getBoard에 있는 것을 옮겨옴. viewCount가 5개씩 증가하는 것 방지하기 위해. 독립적인 veiwcount매서드를 만들어줌.
             // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
             BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
-            System.out.println("boardEntity.toString()");
-            System.out.println(boardNumber);
-            System.out.println(boardEntity.getWriterEmail());
-            System.out.println("boardEntity.toString()");
             if (boardNumber == null) return IncreaseViewCountResponseDto.noExistBoard();
 
             boardEntity.increaseViewCount();
