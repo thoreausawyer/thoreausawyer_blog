@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.thoreausawyer.boardback.dto.request.board.PatchBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostCommentRequestDto;
 import com.thoreausawyer.boardback.dto.response.ResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.DeleteBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetCommentListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto;
@@ -16,11 +18,12 @@ import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.PatchBoardResponseDto;
 import com.thoreausawyer.boardback.entity.BoardEntity;
 import com.thoreausawyer.boardback.entity.CommentEntity;
 import com.thoreausawyer.boardback.entity.FavoriteEntity;
 import com.thoreausawyer.boardback.entity.ImageEntity;
-import com.thoreausawyer.boardback.repository.BoardRespository;
+import com.thoreausawyer.boardback.repository.BoardRepository;
 import com.thoreausawyer.boardback.repository.CommentRepository;
 import com.thoreausawyer.boardback.repository.FavoriteRepository;
 import com.thoreausawyer.boardback.repository.ImageRepository;
@@ -36,11 +39,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardServiceImplement implements BoardService {
     
-    private final BoardRespository boardRespository;
+    private final BoardRepository boardRepository;
     private  final UserRepository userRepository;
-    private final ImageRepository imageRepository;
-    private final FavoriteRepository favoriteRepository;
-    private final CommentRepository commentRepository;
+    private final ImageRepository imageRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
+    private final FavoriteRepository favoriteRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
+    private final CommentRepository commentRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
 
     @Override
     public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
@@ -49,7 +52,7 @@ public class BoardServiceImplement implements BoardService {
 
         try {
 
-            boolean existedBoard = boardRespository.existsByBoardNumber(boardNumber);
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
             if (!existedBoard) return GetFavoriteListResponseDto.noExistBoard();
 
             resultSets = favoriteRepository.getFavoriteList(boardNumber);
@@ -70,7 +73,7 @@ public class BoardServiceImplement implements BoardService {
 
         try {
 
-            boolean existedBoard = boardRespository.existsByBoardNumber(boardNumber);
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
             if (!existedBoard) return GetCommentListResponseDto.noExistBoard();
 
             resultSets = commentRepository.getCommentList(boardNumber);
@@ -91,16 +94,16 @@ public class BoardServiceImplement implements BoardService {
 
         try {
             
-            resultSet = boardRespository.getBoard(boardNumber);
+            resultSet = boardRepository.getBoard(boardNumber);
             if (resultSet == null) return GetBoardResponseDto.noExistBoard();
             
             imageEntities = imageRepository.findByBoardNumber(boardNumber);
 
             // 카운터가 5씩 증가하는 거 방지 
             // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
-            // BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            // BoardEntity boardEntity = BoardRepository.findByBoardNumber(boardNumber);
             // boardEntity.increaseViewCount();
-            // boardRespository.save(boardEntity);
+            // BoardRepository.save(boardEntity);
 
 
         } catch (Exception exception) {
@@ -120,7 +123,7 @@ public class BoardServiceImplement implements BoardService {
             if (!existedEmail) return PostBoardResponseDto.notExistUser();
 
             BoardEntity boardEntity = new BoardEntity(dto, email); // 이곳에서 builder를 통해 생성해도 되지만, 개인의 취향으로 dto, email을 모두 넘겨버리고,
-            boardRespository.save(boardEntity);                     //  BoardEntity에서 dto, email을 받는 생성자를 만들어서 처리.
+            boardRepository.save(boardEntity);                     //  BoardEntity에서 dto, email을 받는 생성자를 만들어서 처리.
             
             // 게시물을 만들면 나오는 boardNumber가지고, 다시 boardImage리스트를 만들어 저장한다.
             int boardNumber = boardEntity.getBoardNumber();
@@ -150,7 +153,7 @@ public class BoardServiceImplement implements BoardService {
 
         try {
 
-            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if (boardEntity == null) return PostCommentResponseDto.noExistBoard();
 
             boolean existedUser = userRepository.existsByEmail(email);
@@ -161,7 +164,7 @@ public class BoardServiceImplement implements BoardService {
             commentRepository.save(commentEntity);
 
             boardEntity.increaseCommentCount();
-            boardRespository.save(boardEntity);
+            boardRepository.save(boardEntity);
 
 
         } catch (Exception exception) {
@@ -182,7 +185,7 @@ public class BoardServiceImplement implements BoardService {
             boolean existedUser = userRepository.existsByEmail(email);
             if (!existedUser) return PutFavoriteResponseDto.noExistUser();
             
-            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if (boardEntity == null) return PutFavoriteResponseDto.noExistBoard();
 
             FavoriteEntity favoriteEntity = favoriteRepository.findByBoardNumberAndUserEmail(boardNumber, email);
@@ -196,7 +199,7 @@ public class BoardServiceImplement implements BoardService {
                 boardEntity.decreaseFavoriteCount();
             }
             
-            boardRespository.save(boardEntity);
+            boardRepository.save(boardEntity);
 
 
         } catch (Exception exception) {
@@ -208,16 +211,55 @@ public class BoardServiceImplement implements BoardService {
     }
 
     @Override
+    public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
+            String email) {
+
+                try {
+
+                    BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+                    if (boardEntity == null) return PutFavoriteResponseDto.noExistBoard();
+                    
+                    boolean existedUser = userRepository.existsByEmail(email);
+                    if (!existedUser) return PutFavoriteResponseDto.noExistUser();
+
+                    String writerEmail = boardEntity.getWriterEmail();
+                    boolean isWriter = writerEmail.equals(email);
+                    if (!isWriter) return PutFavoriteResponseDto.noPermission();
+
+                    boardEntity.patchBoard(dto);
+                    boardRepository.save(boardEntity);
+
+                    imageRepository.deleteByBoardNumber(boardNumber); //원래 존재했던 이미지 다 지우고 새로운 리스트 만듦
+                    List<String> boardImageList = dto.getBoardImageList();
+                    List<ImageEntity> imageEntities = new ArrayList<>();
+
+                    for (String image: boardImageList) {
+                        ImageEntity imageEntity = new ImageEntity(boardNumber, image);
+                        imageEntities.add(imageEntity);
+                    }
+                    
+                    // 한번에 모아서 저장
+                    imageRepository.saveAll(imageEntities);
+
+                    
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    return PatchBoardResponseDto.databaseError();
+                }
+                return PatchBoardResponseDto.success();
+    }
+
+    @Override
     public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber) {
         try {
             
             // getBoard에 있는 것을 옮겨옴. viewCount가 5개씩 증가하는 것 방지하기 위해. 독립적인 veiwcount매서드를 만들어줌.
             // 조회수, JPA ORM기법을 그대로 쓸 수 있도록 작성한 문법
-            BoardEntity boardEntity = boardRespository.findByBoardNumber(boardNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if (boardNumber == null) return IncreaseViewCountResponseDto.noExistBoard();
 
             boardEntity.increaseViewCount();
-            boardRespository.save(boardEntity);
+            boardRepository.save(boardEntity);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -226,6 +268,43 @@ public class BoardServiceImplement implements BoardService {
         
         return IncreaseViewCountResponseDto.success();
     }
+
+    // 게시물 삭제
+    @Override
+    public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
+
+        try {
+
+            // 검증 처리들 1,2,3
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser) return DeleteBoardResponseDto.noExistUser();
+
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null) return DeleteBoardResponseDto.noExistBoard();
+
+            String writerEmail = boardEntity.getWriterEmail();
+            boolean isWriter = writerEmail.equals(writerEmail);
+            if (!isWriter) return DeleteBoardResponseDto.noPermission();
+
+            // 검증이 끝나면,
+            // 이 게시물과 관계가 있는 모든 값들을 지워주는 작업 실시
+            // 참조하고 있는 리포지토리들에 @Transactional 어노테이션과 함께. deleteByBoardNumber() 메서드 JPA 작업을 해준다
+            // 그리고 delete 작업 실시
+            imageRepository.deleteByBoardNumber(boardNumber);
+            commentRepository.deleteByBoardNumber(boardNumber);
+            favoriteRepository.deleteByBoardNumber(boardNumber);
+            
+            // 참조된 리포지토리가 다 삭제 된후, 본 게시물 삭제
+            boardRepository.delete(boardEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return DeleteBoardResponseDto.success();
+    }
+
+    
 
 
 

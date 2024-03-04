@@ -109,6 +109,15 @@
   justify-content: center;
 }
 
+.icon-box-small {
+  width: 16px;
+  height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .icon-button {
   border-radius: 50% 50%;
 
@@ -144,6 +153,12 @@
   width: 16px;
   height: 16px;
   background-image: url(assets/image/angle-right.png);
+}
+
+.expand-left-light-icon {
+  width: 16px;
+  height: 16px;
+  background-image: url(assets/image/angle-left.png);
 }
 
 .logo-light-icon {

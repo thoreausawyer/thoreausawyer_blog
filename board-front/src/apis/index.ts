@@ -6,8 +6,8 @@ import { SignInRequestDto, SignUpRequestDto } from "./request/auth";
 import { SignInResponseDto, SignUpResponseDto } from "./response/auth";
 import { ResponseDto } from "./response";
 import { GetSignInUserResponseDto } from "./response/user";
-import { PostBoardRequestDto, PostCommentRequestDto } from "./request/board";
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, PostCommentResponseDto, DeleteBoardResponseDto  } from "./response/board";
+import { PatchBoardRequsetDto, PostBoardRequestDto, PostCommentRequestDto } from "./request/board";
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, PostCommentResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto  } from "./response/board";
 import GetCommentListResponseDto from "./response/board/get-comment-list.response.dto";
 
 const DOMAIN = 'http://localhost:4000';
@@ -82,10 +82,13 @@ const GET_COMMENT_LIST_URL = (boardNumber: number | string ) => `${API_DOMAIN}/b
 const POST_BOARD_URL = () => `${API_DOMAIN}/board`;
 // 댓글 작성 URL
 const POST_COMMENT_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}/comment`;
+// 게시물 수정 URL
+const PATCH_BOARD_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}`;
 // 좋아요 기능 URL
 const PUT_FAVORITE_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
 // 게시물 삭제 URL
 const DELETE_BOARD_URL = (boardNumber: number | string) => `${API_DOMAIN}/board/${boardNumber}`;
+
 
 export const getBoardRequest = async (boardNumber: number | string ) => {
     const result = await axios.get(GET_BOARD_URL(boardNumber))
@@ -169,6 +172,20 @@ export const postCommentRequest = async (boardNumber: number | string , requsetB
             return responseBody;
         })
         return result;
+}
+
+export const patchBoardRequset = async (boardNumber: number | string, requsetBody: PatchBoardRequsetDto, accessToken: string) =>{
+    const result = await axios.patch(PATCH_BOARD_URL(boardNumber), requsetBody, authorization(accessToken))
+            .then(response =>{
+                const responseBody: PatchBoardResponseDto = response.data;
+                return responseBody;
+            })
+            .catch(error =>{
+                if (!error.response) return null;
+                const responseBody: ResponseDto = error.response.data;
+                return responseBody;
+            })
+            return result;
 }
 
 export const putFavoriteRequest = async (boardNumber: number | string, accessToken: string) =>{

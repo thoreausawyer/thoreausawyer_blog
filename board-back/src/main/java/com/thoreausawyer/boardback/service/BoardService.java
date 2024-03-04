@@ -6,11 +6,14 @@ import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetCommentListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
+import com.thoreausawyer.boardback.dto.request.board.PatchBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostCommentRequestDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.PatchBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.DeleteBoardResponseDto;
 
 public interface BoardService {
     ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber); //pathValuable로 보든넘버를 받아서 내보내줌.
@@ -21,6 +24,11 @@ public interface BoardService {
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email);
 
     ResponseEntity<? super PutFavoriteResponseDto> putFavoite(Integer boardNumber, String email);
+    ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber, String email);
 
     ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber);
+    ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email);
+
+
+
 }

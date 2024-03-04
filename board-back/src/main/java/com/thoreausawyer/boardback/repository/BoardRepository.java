@@ -8,7 +8,7 @@ import com.thoreausawyer.boardback.entity.BoardEntity;
 import com.thoreausawyer.boardback.repository.resultSet.GetBoardResultSet;
 
 @Repository
-public interface BoardRespository extends JpaRepository<BoardEntity,Integer>{
+public interface BoardRepository extends JpaRepository<BoardEntity,Integer>{
 
     boolean existsByBoardNumber(Integer boardNumber);
 
