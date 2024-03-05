@@ -26,7 +26,7 @@ public class BoardListViewEntity {
     private String writerEmail;
     private String writerNickname;
     private String writerProfileImage;
-    
-    
 
 }
+
+    

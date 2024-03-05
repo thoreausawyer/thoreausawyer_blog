@@ -3,6 +3,7 @@ import "./style.css";
 import { BoardListItem } from "types/interface";
 import { useNavigate } from "react-router-dom";
 import defaultProfileImage from "assets/image/white-flower-tulip.png";
+import { BOARD_DETAIL_PATH, BOARD_PATH } from "constant";
 
 //컴포넌트를 받아 올 것이다 = 데이터들을 외부로부터 받아오는 것
 interface Props {
@@ -17,11 +18,11 @@ export default function BoardItem({ boardListItem }: Props) {
   const { writeDatetime, writerNickname, writerProfileImage } = boardListItem;
 
   //            function : 네이게이트 함수          //
-  // const navigator = useNavigate();
+  const navigate = useNavigate();
 
   //            event handler : 게시물 아이템 클릭 이벤트 처리 함수          //
   const onClickHandler = () => {
-    // navigator(boardNumber);
+    navigate(BOARD_PATH() + '/' + BOARD_DETAIL_PATH(boardNumber));
   };
 
   //            render : Board List Item 컴포넌트 랜더링         //

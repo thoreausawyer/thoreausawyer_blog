@@ -60,14 +60,18 @@ const usePagination = <T>(countPerPage: number) =>{ //제네릭 타입을, 매�
     useEffect(setViewPage, [currentPage]); // setViewPage가 바뀌면, setView가 바뀌게
 
     return {
-        currentPage, // 현재 페이지가 어떤 페이지에 있는지 작업하기 위해서, 다른 호출부 작업하기 위해서,
-        setCurrentPage, // 현재 페이지를 바꿔주는 작업을 화면해서 하기 위해, 
-        currentSection, // 섹션을 바꾸는 행위도 화면해서 하기 위해,
-        setCurrentSection, // 섹션을 바꾸는 행위도 화면해서 하기 위해,
-        viewList, // 현재 보여줄 리스트를 전달해줘야, 화면에 보여짐.
-        viewPageList, // 페이지 리스트를 전달해줘야 화면에서 작업 가능
-        totalSection, // 전체 섹션이 몇개가 있는지 전달해줘야 함, 현재 섹션이 마지막 섹션과 동일하다고 한다면, 다음으로의 화살표를 동작 못하게 만들것임
-        setTotalList // 1번. API 통해서 리스트를 가져온 다음에, 전체 리스트로 작업을 해서 위의 값들을 내보내 줄 것임. 필수로 필요함. 
+        currentPage, currentSection, viewList, viewPageList,totalSection,
+        setCurrentPage,setCurrentSection,setTotalList
+        
+        // 설명
+        // currentPage, // 현재 페이지가 어떤 페이지에 있는지 작업하기 위해서, 다른 호출부 작업하기 위해서,
+        // setCurrentPage, // 현재 페이지를 바꿔주는 작업을 화면해서 하기 위해, 
+        // currentSection, // 섹션을 바꾸는 행위도 화면해서 하기 위해,
+        // setCurrentSection, // 섹션을 바꾸는 행위도 화면해서 하기 위해,
+        // viewList, // 현재 보여줄 리스트를 전달해줘야, 화면에 보여짐.
+        // viewPageList, // 페이지 리스트를 전달해줘야 화면에서 작업 가능
+        // totalSection, // 전체 섹션이 몇개가 있는지 전달해줘야 함, 현재 섹션이 마지막 섹션과 동일하다고 한다면, 다음으로의 화살표를 동작 못하게 만들것임
+        // setTotalList // 1번. API 통해서 리스트를 가져온 다음에, 전체 리스트로 작업을 해서 위의 값들을 내보내 줄 것임. 필수로 필요함. 
     };
 }
 

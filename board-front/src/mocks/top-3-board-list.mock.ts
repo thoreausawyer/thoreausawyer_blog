@@ -7,7 +7,7 @@ const top3BoardListMock: BoardListItem[] = [
       "오늘 점심 뭐먹지 맛있는 거 먹고 싶은데 추천 부탁 오늘 점심 뭐먹지 맛있는 거 먹고 싶은데",
     content:
       "오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 나 점심때 오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 오늘 점심을 뭐먹을 지 너무 고민이 되는 오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 나 점심때 ...",
-    boardTitleImage: null,
+    boardTitleImage: "https://cdn.pixabay.com/photo/2023/08/06/13/36/ai-generated-8172973__340.png",
     favoriteCount: 0,
     commentCount: 0,
     viewCount: 0,
@@ -22,7 +22,7 @@ const top3BoardListMock: BoardListItem[] = [
       "오늘 점심 뭐먹지 맛있는 거 먹고 싶은데 추천 부탁 오늘 점심 뭐먹지 맛있는 거 먹고 싶은데",
     content:
       "오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 나 점심때 오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 오늘 점심을 뭐먹을 지 너무 고민이 되는 오늘 점심을 뭐먹을 지 너무 고민이 되는 데 뭐 먹을까? 나 점심때 ...",
-    boardTitleImage: null,
+    boardTitleImage: "https://cdn.pixabay.com/photo/2023/07/31/13/42/female-portrait-8161030__340.png",
     favoriteCount: 0,
     commentCount: 0,
     viewCount: 0,

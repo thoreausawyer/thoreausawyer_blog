@@ -7,8 +7,9 @@ import { SignInResponseDto, SignUpResponseDto } from "./response/auth";
 import { ResponseDto } from "./response";
 import { GetSignInUserResponseDto } from "./response/user";
 import { PatchBoardRequsetDto, PostBoardRequestDto, PostCommentRequestDto } from "./request/board";
-import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, PostCommentResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto  } from "./response/board";
+import { PostBoardResponseDto, GetBoardResponseDto, IncreaseViewCountResponseDto, GetFavoriteListResponseDto, PutFavoriteResponseDto, PostCommentResponseDto, DeleteBoardResponseDto, PatchBoardResponseDto, GetLatestBoardListResponseDto, GetTop3BoardListResponseDto  } from "./response/board";
 import GetCommentListResponseDto from "./response/board/get-comment-list.response.dto";
+import { GetPopularListResponseDto } from "./response/search";
 
 const DOMAIN = 'http://localhost:4000';
 
@@ -72,6 +73,10 @@ export const signUpRequest = async (requestBody: SignUpRequestDto) => {
 
 // 게시물 상세 불러오기 URL
 const GET_BOARD_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}`;
+// 최근 게시물 URL
+const GET_LATEST_BOARD_LIST_URL = () => `${API_DOMAIN}/board/latest-list`
+// Top 3 게시물 URL
+const GET_TOP_3_BOARD_LIST_URL = () => `${API_DOMAIN}/board/top-3`
 // 조회수 하나씩 올리기 URL
 const INCREASE_VIEW_COUNT_URL = (boardNumber: number | string ) => `${API_DOMAIN}/board/${boardNumber}/increase-view-count`;
 // 좋아요 리스트 URL
@@ -102,6 +107,34 @@ export const getBoardRequest = async (boardNumber: number | string ) => {
             return responseBody;
         })
     return result;
+}
+
+export const getLatestBoardListRequest = async () => {
+    const result = await axios.get(GET_LATEST_BOARD_LIST_URL())
+    .then(response => {
+        const responseBody: GetLatestBoardListResponseDto = response.data;
+        return responseBody;
+    })
+    .catch(error => {
+        if(!error.response) return null;
+        const responseBody: ResponseDto = error.response.data;
+        return responseBody;
+    })
+return result;
+}
+
+export const getTop3BoardListRequest = async () => {
+    const result = await axios.get(GET_TOP_3_BOARD_LIST_URL())
+    .then(response => {
+        const responseBody: GetTop3BoardListResponseDto = response.data;
+        return responseBody;
+    })
+    .catch(error => {
+        if(!error.response) return null;
+        const responseBody: ResponseDto = error.response.data;
+        return responseBody;
+    })
+return result;
 }
 
 export const increaseViewCountRequset = async (boardNumber: number | string) => {
@@ -216,6 +249,27 @@ export const deleteBoardRequest = async (boardNumber: number | string, accessTok
         return result
 }
 
+
+// 검색
+
+// 인기 검색어 리스트 URL
+const GET_POPULAR_LIST_URL = () => `${API_DOMAIN}/search/popular-list`;
+
+export const getPopularListRequest = async () => {
+    const result = await axios.get(GET_POPULAR_LIST_URL())
+        .then(response => {
+            const responseBody: GetPopularListResponseDto = response.data;
+            return responseBody;
+        })
+        .catch(error =>{
+            if (!error.response) return null;
+            const responseBody: ResponseDto = error.response.data;
+            return responseBody;
+        });
+        return result;
+    }
+
+
 // 로그인
 const GET_SIGN_IN_USER_URL = () => `${API_DOMAIN}/user`;
 
@@ -234,20 +288,19 @@ export const getSignInUserRequset = async (accessToken: string) => {
         return result;
     }
 
-    const FILE_DOMAIN = `${DOMAIN}/file`;
+// 파일 업로드
+const FILE_DOMAIN = `${DOMAIN}/file`;
+const FILE_UPLOAD_URL = () => `${FILE_DOMAIN}/upload`
+const multipartFormData = { headers: { 'Content-Type' : 'multipart/form-data' } };
 
-    const FILE_UPLOAD_URL = () => `${FILE_DOMAIN}/upload`
-
-    const multipartFormData = { headers: { 'Content-Type' : 'multipart/form-data' } };
-
-    export const fileUploadRequest = async (data: FormData) => {
-        const result = await axios.post(FILE_UPLOAD_URL(), data, multipartFormData)
-            .then(response => {
-                const responseBody: string = response.data;
-                return responseBody;
-            })
-            .catch(error => {
-                return null;
-            })
-        return result;
-    }
+export const fileUploadRequest = async (data: FormData) => {
+const result = await axios.post(FILE_UPLOAD_URL(), data, multipartFormData)
+    .then(response => {
+        const responseBody: string = response.data;
+        return responseBody;
+    })
+    .catch(error => {
+        return null;
+    })
+return result;
+}

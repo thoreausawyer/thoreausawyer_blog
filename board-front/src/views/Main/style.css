@@ -1,0 +1,134 @@
+/* 메인 상단 화면 style */
+#main-top-wrapper{
+    padding: 80px 0 40px;
+    
+    display: flex;
+    justify-content: center;
+}
+.main-top-container{
+    width: 1200px;
+    min-width: 1200px;
+
+    display: flex;
+    /* 위에서 아래로 배열 */
+    flex-direction: column;
+    /* 수직 중앙 정렬 */
+    align-items: center;
+    gap: 56px;
+}
+.main-top-title{
+    color: rgba(0,0,0,1);
+
+    text-align: center;
+    font-family: Iro;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 140%;
+    letter-spacing: -0.8px;
+    /* 줄바꿈 적용시키기 */
+    white-space: pre-wrap;
+}
+.main-top-contents-box{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+.main-top-contents-title{
+    color: rgba(0,0,0,1);
+
+    font-family: Iro;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.main-top-contents{
+    display: flex;
+    /* 옆으로 나열하기 */
+    justify-content: space-between;
+    gap: 24px;
+}
+
+/* 메인 하단 화면 style */
+#main-bottom-wrapper{
+    padding: 40px 0;
+    
+    display: flex;
+    justify-content: center;
+
+    background-color: rgba(0,0,0,0.05);
+}
+.main-bottom-container{
+    width: 1200px;
+    min-height: 1200px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.main-bottom-title{
+    color: rgba(0,0,0,1);
+
+    font-family: Iro;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.main-bottom-contents-box{
+    width: 100%;
+    /* layout grid 2:1비율로 나누어져있임 */
+    /* flex로 해도 상관은 없음 */
+    display: grid;
+    
+    grid-template-columns: 8fr 4fr;
+    /* 그리스 사이사이의 갭 */
+    gap: 24px;
+}
+.main-bottom-latest-contents{
+    grid-column: 1/2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* 인기 검색어 style */
+.main-bottom-popular-box{
+    grid-column: 2/3;
+}
+.main-bottom-popular-card{
+    padding: 24px;
+
+    background-color: rgba(255,255,255,1);
+}
+.main-bottom-popular-card-container{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.main-bottom-popular-card-title{
+    color: rgba(0,0,0,1);
+
+    font-family: Iro;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.main-bottom-popular-card-contents{
+    display: flex;
+    /* 감싸여 쌓임 */
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+/* word-badge는 App.css에서 설정 */
+
+.main-bottom-pagination-box{
+    margin-top: 60px;
+    
+    display: flex;
+    justify-content: center;
+}

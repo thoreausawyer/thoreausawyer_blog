@@ -1,7 +1,12 @@
 package com.thoreausawyer.boardback.service.implement;
 
+
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,19 +19,26 @@ import com.thoreausawyer.boardback.dto.response.board.DeleteBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetCommentListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetLatestBoardListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetSearchBoardListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetTop3BoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PatchBoardResponseDto;
 import com.thoreausawyer.boardback.entity.BoardEntity;
+import com.thoreausawyer.boardback.entity.BoardListViewEntity;
 import com.thoreausawyer.boardback.entity.CommentEntity;
 import com.thoreausawyer.boardback.entity.FavoriteEntity;
 import com.thoreausawyer.boardback.entity.ImageEntity;
+import com.thoreausawyer.boardback.entity.SearchLogEntity;
+import com.thoreausawyer.boardback.repository.BoardListViewRepository;
 import com.thoreausawyer.boardback.repository.BoardRepository;
 import com.thoreausawyer.boardback.repository.CommentRepository;
 import com.thoreausawyer.boardback.repository.FavoriteRepository;
 import com.thoreausawyer.boardback.repository.ImageRepository;
+import com.thoreausawyer.boardback.repository.SearchLogRepository;
 import com.thoreausawyer.boardback.repository.UserRepository;
 import com.thoreausawyer.boardback.repository.resultSet.GetBoardResultSet;
 import com.thoreausawyer.boardback.repository.resultSet.GetCommentListResultSet;
@@ -39,11 +51,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardServiceImplement implements BoardService {
     
+    private final SearchLogRepository searchLogRepository;
     private final BoardRepository boardRepository;
     private  final UserRepository userRepository;
     private final ImageRepository imageRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
     private final FavoriteRepository favoriteRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
     private final CommentRepository commentRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
+    private final BoardListViewRepository  boardListViewRepository;
 
     @Override
     public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
@@ -85,6 +99,73 @@ public class BoardServiceImplement implements BoardService {
         return GetCommentListResponseDto.success(resultSets);
     }
 
+    @Override
+    public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
+
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+        try {
+
+            boardListViewEntities = boardListViewRepository.findByOrderByWriteDatetimeDesc();
+        
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetLatestBoardListResponseDto.success(boardListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
+
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+        try {
+            
+            // 일주일 전 시간 구하기.
+            Date beforeWeek = Date.from(Instant.now().minus(7,ChronoUnit.DAYS));
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String sevenDaysAgo = simpleDateFormat.format(beforeWeek);
+
+            boardListViewEntities = boardListViewRepository.findTop3ByWriteDatetimeGreaterThanOrderByFavoriteCountDescCommentCountDescViewCountDescWriteDatetimeDesc(sevenDaysAgo);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetTop3BoardListResponseDto.success(boardListViewEntities);
+    }
+    
+    @Override
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord,
+            String preSearchWord) {
+
+                List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+                try {
+
+                    boardListViewEntities = boardListViewRepository.findByTitleContainsOrContentContainsOrderByWriteDatetimeDesc(searchWord, searchWord);
+                    
+                    // 검색했던 작업을 searchLog에 저장해야한다.
+                    SearchLogEntity searchLogEntity = new SearchLogEntity(searchWord, preSearchWord, false);
+                    searchLogRepository.save(searchLogEntity);
+
+                    // preSearchWord가 존재하는지 체크
+                    boolean relation = preSearchWord != null;
+                    if( relation ){ // 이전 검색어가 있으면,
+                        // 이곳의 searchLogEntity와 바깥의 searchLogEntity는 다른 인스턴스이므로 다른 것이다.
+                        searchLogEntity = new SearchLogEntity(preSearchWord, searchWord, relation);
+                        searchLogRepository.save(searchLogEntity);
+                    }
+
+                    
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    return ResponseDto.databaseError();
+                }
+                return GetSearchBoardListResponseDto.success(boardListViewEntities);
+    }
+
 
     @Override
     public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
@@ -112,7 +193,6 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetBoardResponseDto.success(resultSet, imageEntities);
     }
-
 
     @Override
 	public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -147,7 +227,6 @@ public class BoardServiceImplement implements BoardService {
         return PostBoardResponseDto.success();
 	}
 
-    
     @Override
     public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email) {
 
@@ -303,14 +382,6 @@ public class BoardServiceImplement implements BoardService {
         }
         return DeleteBoardResponseDto.success();
     }
-
-    
-
-
-
-
-
-
     
     
 }

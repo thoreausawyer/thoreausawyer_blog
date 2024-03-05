@@ -1,0 +1,16 @@
+1. 클라이언트에서 HTTP 요청을 보냄
+-> (HTTP Request)
+
+2. API 컨트롤러가 요청을 받아 처리함
+-> (Controller)
+    2-1. 컨트롤러에서 서비스 호출하여 비즈니스 로직을 수행함
+    -> (Controller -> Service)
+-> (Service)
+    2-2. 서비스에서 데이터 액세스 계층(DAO, Repository)을 통해 데이터베이스와 통신하여 데이터를 가져오거나 저장함
+    -> (Service -> Repository)
+-> (Repository)
+
+
+
+3. 컨트롤러는 클라이언트에게 HTTP 응답을 반환함
+-> (Controller -> HTTP Response)
