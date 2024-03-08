@@ -22,6 +22,7 @@ import com.thoreausawyer.boardback.dto.response.board.GetFavoriteListResponseDto
 import com.thoreausawyer.boardback.dto.response.board.GetLatestBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetSearchBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetTop3BoardListResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
@@ -166,6 +167,24 @@ public class BoardServiceImplement implements BoardService {
                 return GetSearchBoardListResponseDto.success(boardListViewEntities);
     }
 
+    @Override
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
+        
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+        try {
+        
+            boolean existedUser = userRepository.existsByEmail(email);
+            if (!existedUser) return GetUserBoardListResponseDto.noExistUser();
+
+            boardListViewEntities = boardListViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(email);
+
+        } catch (Exception Exception) {
+            Exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetUserBoardListResponseDto.success(boardListViewEntities);
+    }
+    
 
     @Override
     public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
@@ -382,6 +401,6 @@ public class BoardServiceImplement implements BoardService {
         }
         return DeleteBoardResponseDto.success();
     }
-    
+
     
 }

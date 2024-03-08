@@ -1,0 +1,188 @@
+#user-top-wrapper{
+    padding: 40px 0 45px;
+
+    display: flex;
+    justify-content: center;
+}
+.user-top-container{
+    width: 1200px;
+    min-width: 1200px;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.user-top-my-profile-image-box{
+    border-radius: 50%;
+    
+    width: 120px;
+    height: 120px;
+
+    display: flex;
+    align-items: center;
+
+    background-color: rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+.user-top-profile-image{
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+}
+
+.user-top-profile-image-box{
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+
+    display: flex;
+    justify-self: center;
+    align-items: center;
+
+    background-color: rgba(0,0,0,0.2);
+
+    background-position: 50% 50%;
+    background-size: 100% 100%;
+}
+.user-top-info-box{
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+.user-top-info-nickname-box{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.user-top-info-nickname-input{
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+
+    display: inline-block;
+
+    padding-block: 0px;
+    padding-inline: 0px;
+
+    color: rgba(0,0,0,1);
+
+    font-size: 24px;
+    font-weight: 500;
+}
+.user-top-info-nickname{
+    color: rgba(0,0,0,0.7);
+
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.user-top-info-email{
+
+    color: rgba(0,0,0,0.4);
+    
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 140%;
+}
+
+/* 하단 */
+#user-bottom-wrapper{
+    padding: 40px 0;
+    min-height: 880px;
+    
+    display: flex;
+    justify-content: center;
+
+    background-color: rgba(0,0,0,0.05);
+}
+.user-bottom-container{
+    width: 1200px;
+    min-width: 1200px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.user-bottom-title{
+    color: rgba(0,0,0,1);
+
+    font-family: Iro;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.user-bottom-contents-box{
+    width: 100%;
+    /* layout grid 2:1비율로 나누어져있임 */
+    /* flex로 해도 상관은 없음 */
+    display: grid;
+
+    grid-template-columns: 8fr 4fr;
+    /* 그리스 사이사이의 갭 */
+    gap: 24px;
+}
+.user-bottom-contents{
+    grid-column: 1/2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.user-bottom-contents-nothing{
+    width: 100%;
+    height: 76px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgba(0,0,0,0.4);
+    font-family: Iro;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.user-bottom-side-box{
+    grid-column: 2/3;
+}
+.user-bottom-side-card{
+    width: 100%;
+    height: 76px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255,255,255,1);
+    cursor: pointer;
+}
+.user-bottom-side-card:hover{
+    background-color: rgba(255,255,255,0.8);
+}
+.user-bottom-side-container{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.user-bottom-side-text{
+    color: rgba(0,0,0,1);
+
+    font-family: Iro;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 140%;
+}
+.user-bottom-pagination-box{
+    margin-top: 60px;
+    
+    display: flex;
+    justify-content: center;
+}

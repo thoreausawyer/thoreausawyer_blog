@@ -8,18 +8,16 @@ import com.thoreausawyer.boardback.common.ResponseMessage;
 import com.thoreausawyer.boardback.dto.response.ResponseDto;
 import com.thoreausawyer.boardback.entity.UserEntity;
 
-
 import lombok.Getter;
 
 @Getter
-public class GetSignInUserResponseDto extends ResponseDto{
-    
+public class GetUserResponseDto extends ResponseDto{
+
     private String email;
     private String nickname;
     private String profileImage;
 
-    //생성자 만들어야함
-    private GetSignInUserResponseDto(UserEntity userEntity){
+    private GetUserResponseDto(UserEntity userEntity){
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
         this.email = userEntity.getEmail();
         this.nickname = userEntity.getNickname();
@@ -27,8 +25,8 @@ public class GetSignInUserResponseDto extends ResponseDto{
     }
 
     //존재하는 유저 response
-    public static ResponseEntity<GetSignInUserResponseDto> success(UserEntity userEntity){
-        GetSignInUserResponseDto result = new GetSignInUserResponseDto(userEntity);
+    public static ResponseEntity<GetUserResponseDto> success(UserEntity userEntity){
+        GetUserResponseDto result = new GetUserResponseDto(userEntity);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
@@ -37,4 +35,5 @@ public class GetSignInUserResponseDto extends ResponseDto{
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXISTED_USER, ResponseMessage.NOT_EXISTED_USER);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result);
     }
+    
 }

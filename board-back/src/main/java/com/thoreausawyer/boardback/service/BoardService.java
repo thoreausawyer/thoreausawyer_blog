@@ -16,6 +16,7 @@ import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PatchBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.DeleteBoardResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetSearchBoardListResponseDto;
 
 public interface BoardService {
@@ -24,7 +25,8 @@ public interface BoardService {
     ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber);
     ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList(); // 매개변수 없음
     ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList(); // 매개변수 없음
-    ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord, String preSearchWord); 
+    ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord, String preSearchWord);
+    ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email);
 
     ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email);
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email);

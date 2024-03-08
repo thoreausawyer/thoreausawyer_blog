@@ -106,7 +106,6 @@ export default function Search() {
           totalSection={totalSection}
           />
         }
-        
       </div>
     </div>
   </div>

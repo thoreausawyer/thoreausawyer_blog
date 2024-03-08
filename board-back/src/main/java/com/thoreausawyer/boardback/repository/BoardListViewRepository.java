@@ -15,4 +15,7 @@ public interface BoardListViewRepository extends JpaRepository<BoardListViewEnti
     
     // contains가 포함하고 있느냐, 검색어에 주로 쓰임
     List<BoardListViewEntity> findByTitleContainsOrContentContainsOrderByWriteDatetimeDesc(String title, String content);
+
+    // 특정 유저 리스트
+    List<BoardListViewEntity> findByWriterEmailOrderByWriteDatetimeDesc(String writerEmail);
 }

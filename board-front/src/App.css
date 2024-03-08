@@ -133,6 +133,17 @@
   justify-content: center;
 }
 
+.icon-box-large {
+  width: 40px;
+  height: 40px;
+
+  margin-left: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
 .icon-button {
   border-radius: 50% 50%;
 
@@ -150,12 +161,13 @@
   background-color: 0, 0, 0, 0.05;
 }
 
-.icon {
+.icon{
   width: 100%;
   height: 100%;
-
+  
   background-position: 50% 50%;
   background-size: 100% 100%;
+
 }
 
 .eye-light-off-icon {
@@ -236,3 +248,14 @@
   background-image: url(assets/image/white-comment.png);
 }
 
+.edit-icon{
+  background-image: url(assets/image/white-edit.png);
+}
+
+.image-box-white-icon{
+  background-image: url(assets/image/white-user.png);
+}
+
+.arrow-right-icon{
+  background-image: url(assets/image/arrow-right.png);
+}

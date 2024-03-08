@@ -25,6 +25,7 @@ import com.thoreausawyer.boardback.dto.response.board.PostBoardResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PutFavoriteResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.PostCommentResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.DeleteBoardResponseDto;
+import com.thoreausawyer.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetSearchBoardListResponseDto;
 import com.thoreausawyer.boardback.dto.response.board.GetLatestBoardListResponseDto;
 
@@ -93,6 +94,15 @@ public class BoardController {
         ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord, preSearchWord); // 넘어감
         return response;
     }
+    //특정 유저 리스트
+    @GetMapping("user-board-list/{email}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(
+        @PathVariable("email") String email
+    ){
+        ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
+        return response;
+    }
+
     // 게시물 등록
     @PostMapping("")
     public ResponseEntity<? super PostBoardResponseDto> postBoard(
