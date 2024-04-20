@@ -6,7 +6,7 @@ import { boardMock, commentListMock, favoriteListMock } from "mocks";
 import CommnetItem from "components/CommentItem";
 import Pagination from "components/Pagination";
 
-import defaultProfileImage from "assets/image/white-flower-tulip.png";
+import defaultProfileImage from "assets/image/white-user.png";
 import { userLoginUserStore } from "stores";
 import { useNavigate, useParams } from "react-router-dom";
 import { BOARD_PATH, BOARD_UPDATE_PATH, MAIN_PATH, USER_PATH } from "constant";
@@ -53,8 +53,19 @@ export default function BoardDetail() {
     //          function: 작성일 포맷 변경 함수          //
     const getWriteDatetimeFormat = () => {
       if (!board) return '';
+      
+      // // responseBody.writeDatetime가 문자열이라면 Date 객체로 변환
+      // const writeDate = new Date(board.writeDatetime);
+      // // UTC 시간을 로컬 타임존으로 변환
+      // const localWriteDate = new Date(writeDate.getTime() - (writeDate.getTimezoneOffset() * 60000));
+      // localWriteDate.setHours(localWriteDate.getDay() + 1);
+      // const date = dayjs(localWriteDate);
+      
+      
+      // 한국 시간으로 일단 변경 //임시
       const date = dayjs(board.writeDatetime);
-      return date.format('YYYY. MM. DD.');
+      // console.log(board.writeDatetime);
+      return date.format('YYYY. MM. DD');
     }
     //          function: get board response 처리 함수          //
     const getBoardResponse = (responseBody: GetBoardResponseDto | ResponseDto | null) => {

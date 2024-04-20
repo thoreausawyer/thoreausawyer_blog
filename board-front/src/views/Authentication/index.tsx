@@ -538,8 +538,9 @@ import { Address, useDaumPostcodePopup } from "react-daum-postcode";
           <div className="auth-jumbotron-text-box">
             {/* <div className="auth-jumbotron-text">{"Hello,"}</div> */}
             {/* <div className="auth-jumbotron-text">{"I'm Web Developer Park Donghoon."}</div> */}
-            <div className="auth-jumbotron-text">{"안녕하세요,"}</div>
-            <div className="auth-jumbotron-text">{"신입 개발자 박동훈입니다."}</div>
+            <div className="auth-jumbotron-text">{"안녕하세요"}</div>
+            <div className="auth-jumbotron-text">{"백엔드 개발자"}</div>
+            <div className="auth-jumbotron-text">{"박동훈의 IT블로그입니다"}</div>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import java.util.Date;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+// import com.thoreausawyer.boardback.awsconfig.S3Uploader;
 import com.thoreausawyer.boardback.dto.request.board.PatchBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostBoardRequestDto;
 import com.thoreausawyer.boardback.dto.request.board.PostCommentRequestDto;
@@ -60,6 +61,7 @@ public class BoardServiceImplement implements BoardService {
     private final CommentRepository commentRepository; // boardRepository를 참조하고 있는 아이들을 작업 (delte 서비스)
     private final BoardListViewRepository  boardListViewRepository;
 
+    // 좋아요 리스트
     @Override
     public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
     
@@ -80,7 +82,7 @@ public class BoardServiceImplement implements BoardService {
         return GetFavoriteListResponseDto.success(resultSets);
     
     }
-
+    // 댓글 리스트
     @Override
     public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
 
@@ -99,7 +101,7 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetCommentListResponseDto.success(resultSets);
     }
-
+    // 최근 게시물 리스트
     @Override
     public ResponseEntity<? super GetLatestBoardListResponseDto> getLatestBoardList() {
 
@@ -115,7 +117,7 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetLatestBoardListResponseDto.success(boardListViewEntities);
     }
-
+    // 탑 3개 리스트
     @Override
     public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList() {
 
@@ -136,7 +138,7 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetTop3BoardListResponseDto.success(boardListViewEntities);
     }
-    
+    // 검색 게시물 리스트
     @Override
     public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList(String searchWord,
             String preSearchWord) {
@@ -166,7 +168,7 @@ public class BoardServiceImplement implements BoardService {
                 }
                 return GetSearchBoardListResponseDto.success(boardListViewEntities);
     }
-
+    // 특정 유저 게시물 리스트
     @Override
     public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
         
@@ -184,8 +186,7 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetUserBoardListResponseDto.success(boardListViewEntities);
     }
-    
-
+    // 게시물 가져오기
     @Override
     public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
         
@@ -212,7 +213,9 @@ public class BoardServiceImplement implements BoardService {
         }
         return GetBoardResponseDto.success(resultSet, imageEntities);
     }
-
+    // S3 업로더
+    // private final S3Uploader s3Uploader;
+    // 게시물 등록
     @Override
 	public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
 
@@ -227,15 +230,22 @@ public class BoardServiceImplement implements BoardService {
             // 게시물을 만들면 나오는 boardNumber가지고, 다시 boardImage리스트를 만들어 저장한다.
             int boardNumber = boardEntity.getBoardNumber();
 
-            List<String> boardImageList = dto.getBoardImageList();
-            List<ImageEntity> imageEntities = new ArrayList<>();
+            List<String> boardImageList = dto.getBoardImageList(); // 게시물 이미지 리스트를 일단 불러온다
+            List<ImageEntity> imageEntities = new ArrayList<>(); // imageEntties라는 빈 게시물 이미지 리스트 배열을 반든다
 
-            // 리스트 반복 돌리기
+            // 리스트 반복 돌리기 // 게시물 이미지 리스트에 든 객체들을
             for (String image: boardImageList){
                 ImageEntity imageEntity = new ImageEntity(boardNumber, image); // ImageEntity도 생성자를 만들어준다
-                imageEntities.add(imageEntity);
+                imageEntities.add(imageEntity); // 게시물 이미지들이 각 게시물 번호와 이미지 정보들과 함께, imageEntties라는 빈 객체에 순차적으로 담긴다.
             }
             
+
+            // S3 업로드
+            // if (!boardImageList.isEmpty()){
+            //     imageEntities = s3Uploader.uploadImage(boardImageList)
+            // }
+
+            // 로컬 리파지토리
             imageRepository.saveAll(imageEntities); // 바로 이미지 entity를 바로 save해도 되는 그러면 한번에 데이터베이스 접근하는 작업이 많아지기에, saveAll로 한번에 하는게 좋다.
 
         } catch (Exception exception) {
@@ -245,7 +255,7 @@ public class BoardServiceImplement implements BoardService {
 
         return PostBoardResponseDto.success();
 	}
-
+    // 댓글 등록
     @Override
     public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email) {
 
@@ -272,7 +282,7 @@ public class BoardServiceImplement implements BoardService {
 
         return PostCommentResponseDto.success();
     }
-
+    // 좋아요 
     @Override
     public ResponseEntity<? super PutFavoriteResponseDto> putFavoite(Integer boardNumber, String email) {
     
@@ -307,7 +317,7 @@ public class BoardServiceImplement implements BoardService {
     
         return PutFavoriteResponseDto.success();
     }
-
+    // 게시물 수정
     @Override
     public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
             String email) {
@@ -346,7 +356,7 @@ public class BoardServiceImplement implements BoardService {
                 }
                 return PatchBoardResponseDto.success();
     }
-
+    // 좋아요 조회 수
     @Override
     public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(Integer boardNumber) {
         try {
@@ -366,7 +376,6 @@ public class BoardServiceImplement implements BoardService {
         
         return IncreaseViewCountResponseDto.success();
     }
-
     // 게시물 삭제
     @Override
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
@@ -401,6 +410,4 @@ public class BoardServiceImplement implements BoardService {
         }
         return DeleteBoardResponseDto.success();
     }
-
-    
 }

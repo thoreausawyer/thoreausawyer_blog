@@ -4,7 +4,7 @@ import defaultProfileImage from "assets/image/white-user.png";
 import { useNavigate, useParams } from "react-router-dom";
 import Pagination from "components/Pagination";
 import { BoardListItem } from "types/interface";
-import { latestBoardListMock } from "mocks";
+import { latestBoardListMock } from "mocks"; // 테스트 데이터
 import BoardItem from "components/BoardItem";
 import { BOARD_PATH, BOARD_WRITE_PATH, MAIN_PATH, USER_PATH } from "constant";
 import { userLoginUserStore } from "stores";

@@ -1,7 +1,9 @@
 package com.thoreausawyer.boardback.entity;
 
 import java.util.Date;
+import java.util.TimeZone;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.text.SimpleDateFormat;
 
 import com.thoreausawyer.boardback.dto.request.board.PatchBoardRequestDto;
@@ -34,10 +36,13 @@ public class BoardEntity {
     private String writerEmail;
 
     public BoardEntity(PostBoardRequestDto dto, String email){
+        // Date를 작업을 해줘야한다.
+        
         // Date를 작업을 해줘야한다.  
         Date now = Date.from(Instant.now()); // 1. 현재시간 Instant로 구해오기
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 2. SimpleDateFormat으로 시간 형태를 만든다.
-        String writeDateTime = simpleDateFormat.format(now); // 3. simpleDateFormat을 이용해서 writeDateTime을 만든다.
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 3. 한국 시간대로 설정 + 새롭게 추가 됨
+        String writeDateTime = simpleDateFormat.format(now); // 4. simpleDateFormat을 이용해서 writeDateTime을 만든다.
         
         this.title = dto.getTitle();
         this.content = dto.getContent();

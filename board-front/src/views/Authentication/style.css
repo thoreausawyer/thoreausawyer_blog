@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
 
-    background-image: url(../../assets/image/background-violet-dye.png);
+    background-image: url(../Authentication/assets/olive1.jpg);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: auto 100%;
@@ -61,7 +61,7 @@
 }
 
 .auth-jumbotron-text{
-    color: rgba(0,0,0,0.35);
+    color: black;
 
     font-family: Iro;
     font-size: 40px;

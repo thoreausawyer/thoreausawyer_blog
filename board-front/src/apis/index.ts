@@ -12,6 +12,7 @@ import GetCommentListResponseDto from "./response/board/get-comment-list.respons
 import { GetPopularListResponseDto, GetRelationListResponseDto } from "./response/search";
 import { PatchNicknameRequestDto, PatchProfileImageRequestDto } from "./request/user";
 
+// const DOMAIN = 'http://3.35.238.177:4000';
 const DOMAIN = 'http://localhost:4000';
 
 const API_DOMAIN = `${DOMAIN}/api/v1`;

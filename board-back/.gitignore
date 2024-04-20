@@ -1,6 +1,12 @@
 # 프로퍼티스 제외
 # application.properties
 
+# aws 프로퍼티스
+application-aws.properties
+
+# aws key.pem 주석처리
+thoreausawyer-key.pem
+
 HELP.md
 .gradle
 build/

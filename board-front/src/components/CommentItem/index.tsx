@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import { CommentListItem } from "types/interface";
-import defaultProfileImage from "assets/image/white-flower-tulip.png";
+import defaultProfileImage from "assets/image/white-user.png";
 
 import dayjs from "dayjs";
 

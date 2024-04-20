@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import { BoardListItem } from "types/interface";
 import { useNavigate } from "react-router-dom";
-import defaultProfileImage from "assets/image/white-flower-tulip.png";
+import defaultProfileImage from "assets/image/white-user.png"
 import { BOARD_DETAIL_PATH, BOARD_PATH } from "constant";
 
 //컴포넌트를 받아 올 것이다 = 데이터들을 외부로부터 받아오는 것

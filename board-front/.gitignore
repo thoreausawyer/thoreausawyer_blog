@@ -1,4 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# build주석처리하기
+# /build
+
+# aws key.pem 주석처리
+thoreausawyer-key.pem
 
 # dependencies
 /node_modules
@@ -9,7 +14,7 @@
 /coverage
 
 # production
-/build
+
 
 # misc
 .DS_Store
