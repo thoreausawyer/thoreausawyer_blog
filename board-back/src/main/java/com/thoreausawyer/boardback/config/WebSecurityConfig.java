@@ -39,6 +39,7 @@ public class WebSecurityConfig {
     configuration.addAllowedOrigin("*");
     configuration.addAllowedMethod("*");
     configuration.addAllowedHeader("*");
+    configuration.addExposedHeader("*");
     configuration.addExposedHeader("Authorization"); //없어도 작동됨 // 어떤분은 이렇게 해도 된다고 해서 추가해놓았습니다.
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
